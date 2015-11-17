@@ -157,6 +157,7 @@ require(
             flyScore.hide();
             fuelbackground.pause();
             flybackground.pause();
+            gamebacktomenuButton.hide();
 
             backgroundsound.play();
             backgroundsound.loop = true;
@@ -242,6 +243,7 @@ require(
             fuelempty.hide();
             fuelbackground.pause();
             flybackground.pause();
+            gamebacktomenuButton.hide();
 
             backgroundsound.play();
             backgroundsound.loop = true;
@@ -327,6 +329,60 @@ require(
             flightText.show();
         }
 
+        var gamebackmenu = function(){
+            i = 0;
+            while (i<150){
+                fuelDot[i].attr({"y": ((randInt(-50))-1)*200});
+
+                i=i+1
+            };  
+            i = 0;
+            while (i<300){
+                dot[i].attr({"x": ((randInt(-100))-1)*20, "y": ((randInt(-100))-1)*20})
+                dot[i].xpos=dot[i].attr('x'); // Set the value of xpos to be the current position of the dot
+                dot[i].ypos=dot[i].attr('y');
+
+                i=i+1
+            };
+            console.log("clicked");
+            continueButton.hide();
+            fuelCount.hide()
+            fuelfly.hide();
+            distanceTravelled.hide();
+            fuelScore.hide();
+            flyScore.hide();
+            fuelfull.hide();
+            fuelempty.hide();
+            fuelbackground.pause();
+            flybackground.pause();
+            gamebacktomenuButton.hide();
+            clearInterval(mainInterval);
+            clearInterval(mainEmit);
+            clearInterval(mainScore);
+            clearInterval(mainFuel);
+            transpRect.hide();
+            spaceship.hide();
+            clearInterval(drawInterval);
+            clearInterval(repeatInterval);
+            transpRect.hide();
+            mouseDot.hide();
+
+            backgroundsound.play();
+            backgroundsound.loop = true;
+            menuBackground.show();
+            instructionButton.show();
+            speedButton.show();
+            playButton.show();
+            fuelButton.show()
+            currentSpeed.show();
+            currentFuel.show();
+            lastScore.show();
+            highScore.show();
+            totalDistance.show();
+            lifenumber.show()
+            gameTries.show()
+        }
+
         var speed;
         var speedLevel = function(){
             speed = prompt("Please set your desired speed:\n\nGear 1: Slow\nGear 2: Normal\nGear 3: Fast\nGear 4: Supersonic\nGear 5: Lightning speed\n\nControl input:", "Enter only either 1, 2, 3, 4, or 5");
@@ -393,6 +449,7 @@ require(
                         continueButton.show();
                         transpRect.hide();
                         spaceship.hide();
+                        gamebacktomenuButton.hide();
                     } else {
                         clearInterval(mainInterval);
                         clearInterval(mainEmit);
@@ -400,6 +457,7 @@ require(
                         clearInterval(mainFuel);
                         transpRect.hide();
                         spaceship.hide();
+                        gamebacktomenuButton.hide();
                         i = 0;
                         while (i<300){
                             dot[i].attr({"x": ((randInt(-100))-1)*20, "y": ((randInt(-100))-1)*20})
@@ -423,6 +481,7 @@ require(
                         distanceTravelled.hide();
                         flybackground.pause();
                         gameoversound.play();
+                        gamebacktomenuButton.hide();
                     };
                 }
                 if(fuelAmount===0){
@@ -496,6 +555,7 @@ require(
             fuelCount.hide();
             backgroundsound.pause();
 
+            gamebacktomenuButton.show();
             flybackground.play();
             flybackground.loop = true;
             flyScore.show();
@@ -599,6 +659,7 @@ require(
                     continueButton.hide();
                     fuelCount.hide()
                     fuelfly.hide()
+                    gamebacktomenuButton.hide();
                     i = 0;
                     while (i<150){
                         fuelDot[i].attr({"x": randInt(1200), "y": ((randInt(-50))-1)*200})
@@ -618,6 +679,7 @@ require(
                     gameoversound.play();
                     fuelbackground.pause();
                     fuelScore.hide();
+                    gamebacktomenuButton.hide();
                 }
 
                 i=i+1;           
@@ -669,6 +731,7 @@ require(
             fuelfull.hide();
             backgroundsound.pause();
 
+            gamebacktomenuButton.show();
             fuelbackground.play();
             fuelbackground.loop = true
             fuelScore.show();
@@ -712,6 +775,8 @@ require(
         fuelempty.hide();
         var fuelfull = paper.image("images/fuelfull.png", 0, 0, pWidth, pHeight);
         fuelfull.hide();
+        var gamebacktomenuButton = paper.image("images/backtomenu.png", 950, 520, 150, 75);
+        gamebacktomenuButton.hide();
 
         startButton.addEventListener("click", mainMenu);
         instructionButton.addEventListener("click", instructionPage);
@@ -725,5 +790,6 @@ require(
         fuelfull.addEventListener("click", backtomain);
         storybuttonunpressed.addEventListener("click", instructionPage);
         fuelbuttonunpressed.addEventListener("click", fuelinstruction);
-        flightbuttonunpressed.addEventListener("click", flightinstruction)
+        flightbuttonunpressed.addEventListener("click", flightinstruction);
+        gamebacktomenuButton.addEventListener("click", gamebackmenu);
 });
