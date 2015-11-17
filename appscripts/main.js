@@ -138,7 +138,7 @@ require(
         var spaceship = paper.image("images/spaceship.png", mouseX, mouseY, 50, 50);
         spaceship.hide();
 
-        var mouseDot = paper.image("images/playerfuel.png", (mouseX-20), (mouseY-20), 40, 40);
+        var mouseDot = paper.image("images/playerfuel.png", (mouseX-50), (mouseY-50), 100, 100);
         mouseDot.hide();
 
 
@@ -622,8 +622,8 @@ require(
                     fuelDot[i].attr({"y": ((randInt(-50)-1)*200)});
                     fuelDot[i].attr({"y": ((randInt(-50)-1)*200)});
                     fuelDot[i].ypos = fuelDot[i].attr("y");
-                    mouseDot.attr({"width": mouseDot.attr("width")+5});
-                    mouseDot.attr({"height": mouseDot.attr("height")+5});
+                    mouseDot.attr({"width": mouseDot.attr("width")+10});
+                    mouseDot.attr({"height": mouseDot.attr("height")+10});
                     fuelAmount = fuelAmount+5;
                     console.log("Fuel is " + fuelAmount)
                     currentFuel.attr({text: fuelAmount + "%"});
@@ -736,7 +736,7 @@ require(
             fuelbackground.loop = true
             fuelScore.show();
             fuelCount.show();
-            mouseDot.attr({"width": 40, "height": 40});
+            mouseDot.attr({"width": 100, "height": 100});
             nexttoemit=0
             mouseDot.show();
             transpRect.show();
