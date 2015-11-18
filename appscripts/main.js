@@ -154,7 +154,7 @@ require(
         i = 0;
             while (i<300){
                 
-                dot[i] = paper.image("images/meteorite.png", ((randInt(-100))-1)*20, ((randInt(-100))-1)*20, 45, 45);
+                dot[i] = paper.image("images/meteorite.png", (number(randInt(100), 0, 100, -100, -2300)), (number(randInt(100), 0, 100, -100, -2300)), 45, 45);
                 
                 i=i+1
             };  
@@ -274,7 +274,7 @@ require(
             };  
             i = 0;
             while (i<300){
-                dot[i].attr({"x": ((randInt(-100))-1)*20, "y": ((randInt(-100))-1)*20})
+                dot[i].attr({"x": number(randInt(100), 0, 100, -100, -2300), "y": number(randInt(100), 0, 100, -100, -2300)})
                 dot[i].xpos=dot[i].attr('x');
                 dot[i].ypos=dot[i].attr('y');
 
@@ -403,7 +403,7 @@ require(
             };  
             i = 0;
             while (i<300){
-                dot[i].attr({"x": ((randInt(-100))-1)*20, "y": ((randInt(-100))-1)*20})
+                dot[i].attr({"x": number(randInt(100), 0, 100, -100, -2300), "y": number(randInt(100), 0, 100, -100, -2300)})
                 dot[i].xpos=dot[i].attr('x');
                 dot[i].ypos=dot[i].attr('y');
 
@@ -480,7 +480,7 @@ require(
 
         i=0
         while(i<300){
-            moveValue = randInt(difficultyLevel*3); //Provide a random number based on the difficulty setting selected by user
+            moveValue = randInt(difficultyLevel*2); //Provide a random number based on the difficulty setting selected by user
             dot[i].xpos=dot[i].attr('x'); // Set the value of xpos to be the current position of the dot
             dot[i].ypos=dot[i].attr('y');
             dot[i].xrate=moveValue*2; // Set the rate to be based on the random number generated above
@@ -584,9 +584,9 @@ require(
 
         var nexttoemit = 0
         var emit = function(i){
-            moveValue = randInt(difficultyLevel*3)
-            dot[nexttoemit].xpos = ((randInt(-100))-1)*20;
-            dot[nexttoemit].ypos = ((randInt(-100))-1)*20;
+            moveValue = randInt((difficultyLevel*2)+1)
+            dot[nexttoemit].xpos = number(randInt(100), 0, 100, -100, -2300);
+            dot[nexttoemit].ypos = number(randInt(100), 0, 100, -100, -2300);
             dot[nexttoemit].xrate = moveValue*2;
             dot[nexttoemit].yrate = moveValue*2;
             nexttoemit++;
@@ -629,6 +629,17 @@ require(
         //===================================================================================================
 
         var gamePage = function(e){
+            //Reset position and speed of asteroids
+            i=0
+            while(i<300){
+                moveValue = randInt((difficultyLevel*2)+1); //Provide a random number based on the difficulty setting selected by user
+                dot[i].xpos=dot[i].attr('x'); // Set the value of xpos to be the current position of the dot
+                dot[i].ypos=dot[i].attr('y');
+                dot[i].xrate=moveValue*2; // Set the rate to be based on the random number generated above
+                dot[i].yrate=moveValue*2; 
+
+                i=i+1
+            }
             //Only allows the user to play the game if fuel is more than 10% and speed setting is between 1-5
             if(fuelAmount > 10 && speed>0 && speed<6){
             menuBackground.hide();
@@ -669,7 +680,7 @@ require(
             })
             spaceship.show();
             mainInterval = setInterval(draw, 0); 
-            mainEmit = setInterval(emit, 50);
+            mainEmit = setInterval(emit, 150);
             mainScore = setInterval(gameScore, 10);
             mainFuel = setInterval(gameFuel, 5000);
             } else {
