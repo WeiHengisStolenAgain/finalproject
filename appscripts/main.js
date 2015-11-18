@@ -154,7 +154,7 @@ require(
         i = 0;
             while (i<300){
                 
-                dot[i] = paper.image("images/meteorite.png", (number(randInt(100), 0, 100, -100, -2300)), (number(randInt(100), 0, 100, -100, -2300)), 45, 45);
+                dot[i] = paper.image("images/meteorite.png", (number(randInt(100), 0, 100, -100, -4300)), (number(randInt(100), 0, 100, -100, -4300)), 45, 45);
                 
                 i=i+1
             };  
@@ -274,7 +274,7 @@ require(
             };  
             i = 0;
             while (i<300){
-                dot[i].attr({"x": number(randInt(100), 0, 100, -100, -2300), "y": number(randInt(100), 0, 100, -100, -2300)})
+                dot[i].attr({"x": number(randInt(100), 0, 100, -100, -4300), "y": number(randInt(100), 0, 100, -100, -4300)})
                 dot[i].xpos=dot[i].attr('x');
                 dot[i].ypos=dot[i].attr('y');
 
@@ -403,7 +403,7 @@ require(
             };  
             i = 0;
             while (i<300){
-                dot[i].attr({"x": number(randInt(100), 0, 100, -100, -2300), "y": number(randInt(100), 0, 100, -100, -2300)})
+                dot[i].attr({"x": number(randInt(100), 0, 100, -100, -4300), "y": number(randInt(100), 0, 100, -100, -4300)})
                 dot[i].xpos=dot[i].attr('x');
                 dot[i].ypos=dot[i].attr('y');
 
@@ -536,7 +536,7 @@ require(
                         gamebacktomenuButton.hide();
                         i = 0;
                         while (i<300){
-                            dot[i].attr({"x": ((randInt(-100))-1)*20, "y": ((randInt(-100))-1)*20})
+                            dot[i].attr({"x": number(randInt(100), 0, 100, -100, -4300), "y": number(randInt(100), 0, 100, -100, -4300)})
                             dot[i].xpos=dot[i].attr('x'); // Set the value of xpos to be the current position of the dot
                             dot[i].ypos=dot[i].attr('y');
 
@@ -680,7 +680,7 @@ require(
             })
             spaceship.show();
             mainInterval = setInterval(draw, 0); 
-            mainEmit = setInterval(emit, 150);
+            mainEmit = setInterval(emit, 100);
             mainScore = setInterval(gameScore, 10);
             mainFuel = setInterval(gameFuel, 5000);
             } else {
