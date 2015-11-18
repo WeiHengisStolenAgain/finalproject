@@ -6,18 +6,31 @@ require(
 
     function () {
 
-        var paper = new Raphael(document.getElementById("centerDiv"));
+        //===================================================================================================
+        //Setting up the canvas
+        //===================================================================================================
 
+        var paper = new Raphael(document.getElementById("centerDiv"));
         var pWidth = 1131;
         var pHeight = 610;
         console.log("pWidth is " + pWidth + ", and pHeight is " + pHeight);
         var bgRect = paper.rect(0,0,pWidth, pHeight);
         bgRect.attr({"fill": "black"});
 
-        // Setting up initial start screen
+        //===================================================================================================
+        //Setting up images and texts to be used
+        //===================================================================================================
         
+        //===================================================================================================
+        //Title screen
+        //===================================================================================================
+
         var startBackground = paper.image("images/title.png", 0, 0, pWidth, pHeight);
         var startButton = paper.image("images/play1.png", 410, 380, 300, 200);
+
+        //===================================================================================================
+        //Game menu screen
+        //===================================================================================================
 
         var menuBackground = paper.image("images/background1.png", 0, 0, pWidth, pHeight);
         menuBackground.hide();
@@ -50,6 +63,11 @@ require(
         var lives = 3;
         var lifenumber = paper.text(930, 85, lives).attr({'font-size':'25px', 'font-weight':'bold', 'fill':'red'});
         lifenumber.hide();
+
+        //===================================================================================================
+        //Gameover screen
+        //===================================================================================================
+
         var gameoverBackground = paper.image("images/gameover.png", 0, 0, pWidth, pHeight);
         gameoverBackground.hide();
         var gameoverButton = paper.image("images/playagain.png", 325, 390, 500, 225);
@@ -61,13 +79,16 @@ require(
         var gameoverHigh = paper.text(650, 395, highscore).attr({'font-size':'25px', 'font-weight':'bold', 'fill':'white'});
         gameoverHigh.hide();
 
+        //===================================================================================================
+        //Instructions screen
+        //===================================================================================================
+
         var instructionBackground = paper.image("images/instructionstory.png", 0, 0, pWidth, pHeight);
         instructionBackground.hide();
         var instructionfuel = paper.image("images/instructionfuel.png", 0, 0, pWidth, pHeight);
         instructionfuel.hide();
         var instructionflight = paper.image("images/instructionflight.png", 0, 0, pWidth, pHeight);
         instructionflight.hide();
-
         var storybuttonpressed = paper.image("images/storypressed.png", 855, 100, 200, 50);
         storybuttonpressed.hide();
         var storybuttonunpressed = paper.image("images/storyunpressed.png", 855, 100, 200, 50);
@@ -80,7 +101,6 @@ require(
         flightbuttonpressed.hide();
         var flightbuttonunpressed = paper.image("images/flightunpressed.png", 855, 300, 200, 50);
         flightbuttonunpressed.hide();
-
         var backtomenuButton = paper.image("images/backtomenu.png", 840, 380, 250, 150);
         backtomenuButton.hide();
         var instructionsText = paper.text(570, 300, "In a last ditch effort to save humanity, you've volunteered\nto take control of one of the last few spaceships left on Earth.\nIt is now your mission to travel as far as you can\nin order to find a habitable planet to save mankind.\n \nYou are on a one-person team and will have to collect your own fuel and\nmake your own navigational decisions.\n \nThe command wishes you the best of luck.").attr({'font-size':'15px', 'fill':'white'});
@@ -89,6 +109,10 @@ require(
         fuelText.hide()
         var flightText = paper.text(570, 330, "Navigating through space, you will have to avoid\nthe meteorites and asteroids in your path.\n \nNavigate your spaceship by moving your mouse around the screen,\navoiding the asteroids and meteorites.\nAny collision with a meteorite or asteroid will result in you\nlosing a life.\n \nYou start off with 3 lives, and the game is over once it hits 0.").attr({'font-size':'15px', 'fill':'white'});
         flightText.hide()
+
+        //===================================================================================================
+        //Music and sound
+        //===================================================================================================
 
         var backgroundsound = new Audio("sounds/background.wav");
         backgroundsound.autoplay = true;
@@ -99,13 +123,18 @@ require(
         var explosion = new Audio("sounds/explosion.mp3");
         var gameoversound = new Audio("sounds/gameover.wav");
 
+        //===================================================================================================
+        //Random variables to be used
+        //===================================================================================================
+
         var mouseX = 0;
         var mouseY = 0;
-
         var flyTime = 0
-
-
         var moveValue = 0
+
+        //===================================================================================================
+        //Math equations
+        //===================================================================================================
 
         var randInt = function(lim){
             return Math.floor(lim*Math.random())
@@ -117,30 +146,36 @@ require(
             return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
         };
 
-        var dotColor = [];
-        i=0
-        while (i<300){
-            dotColor[i] = number(randInt(50),1,50,0,1) // Generating a random number between 1 and 50 and scaling it to be between 0 and 1
-            
-            i=i+1
-        };
+        //===================================================================================================
+        //Array to create asteroids
+        //===================================================================================================
 
         var dot = [];
         i = 0;
             while (i<300){
                 
-                dot[i] = paper.image("images/meteorite.png", ((randInt(-100))-1)*20, ((randInt(-100))-1)*20, 45, 45); // Specify the size and initial position of the dots
-                var color = "hsl(" + dotColor[i] + ", 0.5, 0.5)" // Creating a variable with a hsl string using the random number generated in dotColor for the hue value
+                dot[i] = paper.image("images/meteorite.png", ((randInt(-100))-1)*20, ((randInt(-100))-1)*20, 45, 45);
                 
                 i=i+1
             };  
 
+        //===================================================================================================
+        //Image to be used for user's spaceship
+        //===================================================================================================
+
         var spaceship = paper.image("images/spaceship.png", mouseX, mouseY, 50, 50);
         spaceship.hide();
+
+        //===================================================================================================
+        //Image to be used for user's fuel unit
+        //===================================================================================================
 
         var mouseDot = paper.image("images/playerfuel.png", (mouseX-50), (mouseY-50), 100, 100);
         mouseDot.hide();
 
+        //===================================================================================================
+        //Function to be called to go to main menu when user starts a new game
+        //===================================================================================================
 
         var mainMenu = function(){
             startBackground.hide();
@@ -161,6 +196,9 @@ require(
 
             backgroundsound.play();
             backgroundsound.loop = true;
+            //===================================================================================================
+            //Resetting values when user starts a new game
+            //===================================================================================================
             totaldistance=0
             numberGame=0
             totalDistance.attr({text: totaldistance})
@@ -171,7 +209,8 @@ require(
             currentFuel.attr({text: fuelAmount + "%"});
             flyDistance=0
             lastScore.attr({text: flyDistance})
-            highscore=0
+            //Keep the highscore value
+            highscore=highscore
             highScore.attr({text: highscore})
 
             menuBackground.show();
@@ -187,6 +226,10 @@ require(
             lifenumber.show();
             gameTries.show()
         }
+
+        //===================================================================================================
+        //Function to be called to go to main menu from instruction page
+        //===================================================================================================
 
         var mainMenuInstruction = function(){
             instructionBackground.hide();
@@ -217,7 +260,12 @@ require(
             gameTries.show()
         }
 
+        //===================================================================================================
+        //Function to be called to go to main menu from game pages
+        //===================================================================================================
+
         var backtomain = function(){
+            //Reset position of asteroids and fuel
             i = 0;
             while (i<150){
                 fuelDot[i].attr({"y": ((randInt(-5000))-500)});
@@ -227,7 +275,7 @@ require(
             i = 0;
             while (i<300){
                 dot[i].attr({"x": ((randInt(-100))-1)*20, "y": ((randInt(-100))-1)*20})
-                dot[i].xpos=dot[i].attr('x'); // Set the value of xpos to be the current position of the dot
+                dot[i].xpos=dot[i].attr('x');
                 dot[i].ypos=dot[i].attr('y');
 
                 i=i+1
@@ -261,6 +309,10 @@ require(
             gameTries.show()
         }
 
+        //===================================================================================================
+        //Function to be called to go to instruction page
+        //===================================================================================================
+
         var instructionPage = function(){
             menuBackground.hide();
             instructionButton.hide();
@@ -292,6 +344,10 @@ require(
             flightbuttonunpressed.show();
         }
 
+        //===================================================================================================
+        //Function to be called to go to fuel page in instructions
+        //===================================================================================================
+
         var fuelinstruction = function(){
             instructionBackground.hide();
             instructionsText.hide();
@@ -311,6 +367,10 @@ require(
             fuelText.show();
         }
 
+        //===================================================================================================
+        //Function to be called to go to flight page in instructions
+        //===================================================================================================
+
         var flightinstruction = function(){
             instructionBackground.hide();
             instructionsText.hide();
@@ -329,7 +389,12 @@ require(
             flightText.show();
         }
 
+        //===================================================================================================
+        //Function to be called when user choose to prematurely end the game
+        //===================================================================================================
+
         var gamebackmenu = function(){
+            //Reset position of the asteroids and fuel
             i = 0;
             while (i<150){
                 fuelDot[i].attr({"y": ((randInt(-5000))-500)});
@@ -339,7 +404,7 @@ require(
             i = 0;
             while (i<300){
                 dot[i].attr({"x": ((randInt(-100))-1)*20, "y": ((randInt(-100))-1)*20})
-                dot[i].xpos=dot[i].attr('x'); // Set the value of xpos to be the current position of the dot
+                dot[i].xpos=dot[i].attr('x');
                 dot[i].ypos=dot[i].attr('y');
 
                 i=i+1
@@ -383,6 +448,10 @@ require(
             gameTries.show()
         }
 
+        //===================================================================================================
+        //Setting the difficulty level of the game
+        //===================================================================================================
+
         var speed;
         var speedLevel = function(){
             speed = prompt("Please set your desired speed:\n\nGear 1: Slow\nGear 2: Normal\nGear 3: Fast\nGear 4: Supersonic\nGear 5: Lightning speed\n\nControl input:", "Enter only either 1, 2, 3, 4, or 5");
@@ -393,7 +462,7 @@ require(
                     
                     // This checks that the converted string is 1-5, otherwise will inform user it's wrong
                     // and prompt again to enter by calling the function levelInput again
-                    // Also change text of currentLevel object so that users can see the difficulty value on screen
+                    // Also change text of currentSpeed object so that users can see the difficulty value on screen
                     if (difficultyLevel>0 && difficultyLevel<6) {
                         alert("Speed set to: "+ difficultyLevel);
                         currentSpeed.attr({text: difficultyLevel});
@@ -405,14 +474,16 @@ require(
             }
         }
 
+        //===================================================================================================
+        //Setting values for initial asteroids
+        //===================================================================================================
+
         i=0
         while(i<300){
-            var dotValueX = number(Math.random(),0,1,-10,10); // Generate a random value to be used by each dot
-            var dotValueY = number(Math.random(),0,1,-10,10); // Generate a random value to be used by each dot
-            moveValue = randInt(difficultyLevel*3);
+            moveValue = randInt(difficultyLevel*3); //Provide a random number based on the difficulty setting selected by user
             dot[i].xpos=dot[i].attr('x'); // Set the value of xpos to be the current position of the dot
             dot[i].ypos=dot[i].attr('y');
-            dot[i].xrate=moveValue*2; // Set the rate to be using the random value generated above
+            dot[i].xrate=moveValue*2; // Set the rate to be based on the random number generated above
             dot[i].yrate=moveValue*2; 
 
             i=i+1
@@ -424,9 +495,12 @@ require(
         var mainScore;
         var mainFuel;
 
+        //===================================================================================================
+        //Move the asteroids and also detect certain game conditions
+        //===================================================================================================
+
         var draw = function(){
             
-            // Create the movement of the array of dots
             i = 0
             while (i<300){
 
@@ -435,12 +509,14 @@ require(
 
                 dot[i].attr({"x": dot[i].xpos, "y": dot[i].ypos}); // Change the attributes of the dots accordingly
                 mouseDotDistance = distance(mouseX, mouseY, dot[i].xpos, dot[i].ypos); // Compute the distance between the cursor and the position of each dot
+                //Detect a hit if the distance is smaller than the size of the asteroid and reduce a life
                 if(mouseDotDistance<45){
                     console.log("Hit detected");
                     lives=lives-1
                     lifenumber.attr({text: lives})
                     explosion.play();
                     alert("You lost a life!")
+                    //Allow the user to go back to menu if the life value is not 0
                     if(lives != 0){
                         clearInterval(mainInterval);
                         clearInterval(mainEmit);
@@ -450,7 +526,7 @@ require(
                         transpRect.hide();
                         spaceship.hide();
                         gamebacktomenuButton.hide();
-                    } else {
+                    } else { //Reset the asteroids and show the gameover page if life value is 0
                         clearInterval(mainInterval);
                         clearInterval(mainEmit);
                         clearInterval(mainScore);
@@ -483,7 +559,7 @@ require(
                         gameoversound.play();
                         gamebacktomenuButton.hide();
                     };
-                }
+                } //Allow user to go back to menu page if fuel value is 0
                 if(fuelAmount===0){
                     clearInterval(mainInterval);
                     clearInterval(mainEmit);
@@ -498,10 +574,13 @@ require(
 
                 i=i+1;           
             }
-
+            //Update the position of the spaceship image to be according to the position of the mouse
             spaceship.attr({"x": mouseX, "y": mouseY});
         }
 
+        //===================================================================================================
+        //Reposition the asteroids to allow constant supply of units
+        //===================================================================================================
 
         var nexttoemit = 0
         var emit = function(i){
@@ -516,17 +595,27 @@ require(
             }
         }
 
+        //===================================================================================================
+        //Increase the distance travelled to be used as a scoring system
+        //===================================================================================================
+
         var gameScore = function(){
+            //Set distance incrementation to be according to the difficulty setting of the user
             flyDistance = flyDistance+(10*speed)
             lastScore.attr({text: flyDistance})
             totaldistance = totaldistance+(10*speed);
             totalDistance.attr({text: totaldistance})
             distanceTravelled.attr({text: flyDistance});
+            //Change the longest flight distance if the user had beaten the previous highscore
             if(flyDistance > highscore){
                 highscore = flyDistance
                 highScore.attr({text: highscore});
             }
         }
+
+        //===================================================================================================
+        //Reduce the amount of fuel the user has
+        //===================================================================================================
 
         var gameFuel = function(){
             fuelAmount = fuelAmount-5
@@ -535,8 +624,12 @@ require(
             currentFuel.attr({text: fuelAmount + "%"});
         }
         
+        //===================================================================================================
+        //Function to be called to go into the flying game
+        //===================================================================================================
 
         var gamePage = function(e){
+            //Only allows the user to play the game if fuel is more than 10% and speed setting is between 1-5
             if(fuelAmount > 10 && speed>0 && speed<6){
             menuBackground.hide();
             instructionButton.hide();
@@ -564,8 +657,9 @@ require(
             numberGame=numberGame+1;
             gameTries.attr({text: numberGame})
             flyDistance = 0;
+            //Show the transparent rectangle to allow user to control over the units
             transpRect.show();
-            transpRect.attr({"fill": "white", "fill-opacity": 0}) // Setting box to be transparent
+            transpRect.attr({"fill": "white", "fill-opacity": 0})
             transpRect.addEventListener("mousemove", function(e){
                 mouseX = e.offsetX;
                 mouseY = e.offsetY
@@ -583,16 +677,24 @@ require(
             } 
         }
 
+            //===================================================================================================
+            //Create variables to be used for intervals
+            //===================================================================================================
+
             var drawInterval;
             var repeatInterval;
+
+            //===================================================================================================
+            //Initiate the array to create fuel units
+            //===================================================================================================
 
             var fuelDot = [];
             var fuelCreate = function(){
                 i = 0;
                 while (i<150){
+                    //Create a random value to be used for the size of the fuel
                     fuelsize = (randInt(60)+3)*4
                     fuelDot[i] = paper.image("images/fuelicon.png", randInt(1200), ((randInt(-5000))-500), fuelsize, fuelsize); // Specify the size and initial position of the dots
-                    var color = "hsl(" + dotColor[i] + ", 0.5, 0.5)" // Creating a variable with a hsl string using the random number generated in dotColor for the hue value
                     fuelDot[i].show()
                     fuelDot[i].xpos=fuelDot[i].attr('x'); // Set the value of xpos to be the current position of the dot
                     fuelDot[i].ypos=fuelDot[i].attr('y');
@@ -603,6 +705,10 @@ require(
                 };  
             };
             
+            //===================================================================================================
+            //Move the fuel units as well as to detect certain game conditions
+            //===================================================================================================
+
             var fuelDraw = function(){
             i = 0
             while (i<150){
@@ -617,12 +723,16 @@ require(
 
                 fuelDot[i].attr({"x": fuelDot[i].xpos, "y": fuelDot[i].ypos}); // Change the attributes of the dots accordingly
 
+                //If life value is not 0, detect if the fuel unit is smaller than user unit when they touches
                 if(lives != 0){
                 if(mouseDotDistance <= (mouseDot.attr("width")/2) && mouseDot.attr("width")>=fuelDot[i].attr("width")){
+                    //Reposition the fuel unit
                     fuelDot[i].attr({"y": ((randInt(-5000))-500)});
                     fuelDot[i].ypos = fuelDot[i].attr("y");
+                    //Increase the size of the user fuel unit
                     mouseDot.attr({"width": mouseDot.attr("width")+10});
                     mouseDot.attr({"height": mouseDot.attr("height")+10});
+                    //Increase and update the fuel value
                     fuelAmount = fuelAmount+5;
                     console.log("Fuel is " + fuelAmount)
                     currentFuel.attr({text: fuelAmount + "%"});
@@ -630,7 +740,7 @@ require(
                     fuelfly.attr({text: fuelAmount + "%"});
                     fuelcollect.play();
                 }
-
+                //End the session when the user hits 100% fuel
                 if(fuelAmount === 100){
                     clearInterval(drawInterval);
                     clearInterval(repeatInterval);
@@ -638,7 +748,7 @@ require(
                     mouseDot.hide();
                     transpRect.hide();
                 };
-
+                //Show the continue screen if the user hits a unit that is larger than the user's unit
                 if(mouseDotDistance <= (fuelDot[i].attr("width")/2) && mouseDot.attr("width") < fuelDot[i].attr("width")){
                     explosion.play();
                     clearInterval(drawInterval);
@@ -646,11 +756,13 @@ require(
                     continueButton.show();
                     mouseDot.hide();
                     transpRect.hide();
+                    //Reduce a life
                     lives = lives-1;
                     lifenumber.attr({text: lives});
                     alert("You lost a life!")
                 };
                 } else {
+                    //Clear everything and reset fuel position before showing gameover screen if the life is 0
                     clearInterval(drawInterval);
                     clearInterval(repeatInterval);
                     transpRect.hide();
@@ -683,12 +795,14 @@ require(
 
                 i=i+1;           
             }
-
+            //Update position of the user fuel unit to be that of the cursor
             mouseDot.attr({"x": (mouseX-(mouseDot.attr("width")/2)), "y": (mouseY-(mouseDot.attr("height")/2))});
             
-
-
         }
+
+            //===================================================================================================
+            //Reposition the fuel units to create a constant supply of units
+            //===================================================================================================
 
             var nexttoemit = 0
             var fuelemit = function(i){
@@ -706,13 +820,19 @@ require(
 
             fuelCreate();
 
+        //===================================================================================================
+        //Funtion to be called to enter the screen to play the fuel game
+        //===================================================================================================
+
         var fuelPage = function(e){
+            //Reset position of fuel units once this is called
             i=0
             while(i<150){
                 fuelDot[i].attr({"y": ((randInt(-5000))-500)});
                 fuelDot[i].ypos=fuelDot[i].attr('y');
                 i=i+1
             }
+            //Only allow the game to be played if fuel is less than 100%
             if(fuelAmount < 100){
             menuBackground.hide();
             instructionButton.hide();
@@ -735,6 +855,7 @@ require(
             fuelbackground.loop = true
             fuelScore.show();
             fuelCount.show();
+            //Reset the size of the user fuel unit
             mouseDot.attr({"width": 100, "height": 100});
             nexttoemit=0
             mouseDot.show();
@@ -752,6 +873,10 @@ require(
                 alert("You already have max fuel!")
             }
         }
+
+        //===================================================================================================
+        //Variables to be shown on top of the other units
+        //===================================================================================================
 
         var fuelScore = paper.image("images/fuelscore.png", 900, 10, 300, 100)
         fuelScore.hide();
@@ -776,6 +901,10 @@ require(
         fuelfull.hide();
         var gamebacktomenuButton = paper.image("images/backtomenu.png", 950, 520, 150, 75);
         gamebacktomenuButton.hide();
+
+        //===================================================================================================
+        //Event listeners for the buttons, calling the various functions accordingly
+        //===================================================================================================
 
         startButton.addEventListener("click", mainMenu);
         instructionButton.addEventListener("click", instructionPage);
