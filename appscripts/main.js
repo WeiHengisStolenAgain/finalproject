@@ -220,7 +220,7 @@ require(
         var backtomain = function(){
             i = 0;
             while (i<150){
-                fuelDot[i].attr({"y": ((randInt(-50))-1)*200});
+                fuelDot[i].attr({"y": ((randInt(-5000))-500)});
 
                 i=i+1
             };  
@@ -332,7 +332,7 @@ require(
         var gamebackmenu = function(){
             i = 0;
             while (i<150){
-                fuelDot[i].attr({"y": ((randInt(-50))-1)*200});
+                fuelDot[i].attr({"y": ((randInt(-5000))-500)});
 
                 i=i+1
             };  
@@ -591,13 +591,13 @@ require(
                 i = 0;
                 while (i<150){
                     fuelsize = (randInt(60)+3)*4
-                    fuelDot[i] = paper.image("images/fuelicon.png", randInt(1200), ((randInt(-50))-1)*200, fuelsize, fuelsize); // Specify the size and initial position of the dots
+                    fuelDot[i] = paper.image("images/fuelicon.png", randInt(1200), ((randInt(-5000))-500), fuelsize, fuelsize); // Specify the size and initial position of the dots
                     var color = "hsl(" + dotColor[i] + ", 0.5, 0.5)" // Creating a variable with a hsl string using the random number generated in dotColor for the hue value
                     fuelDot[i].show()
                     fuelDot[i].xpos=fuelDot[i].attr('x'); // Set the value of xpos to be the current position of the dot
                     fuelDot[i].ypos=fuelDot[i].attr('y');
                     fuelDot[i].xrate=randInt(2); // Set the rate to be using the random value generated above
-                    fuelDot[i].yrate=randInt(2);
+                    fuelDot[i].yrate=(randInt(5)+1);
                     
                     i=i+1
                 };  
@@ -619,8 +619,7 @@ require(
 
                 if(lives != 0){
                 if(mouseDotDistance <= (mouseDot.attr("width")/2) && mouseDot.attr("width")>=fuelDot[i].attr("width")){
-                    fuelDot[i].attr({"y": ((randInt(-50)-1)*200)});
-                    fuelDot[i].attr({"y": ((randInt(-50)-1)*200)});
+                    fuelDot[i].attr({"y": ((randInt(-5000))-500)});
                     fuelDot[i].ypos = fuelDot[i].attr("y");
                     mouseDot.attr({"width": mouseDot.attr("width")+10});
                     mouseDot.attr({"height": mouseDot.attr("height")+10});
@@ -662,7 +661,7 @@ require(
                     gamebacktomenuButton.hide();
                     i = 0;
                     while (i<150){
-                        fuelDot[i].attr({"x": randInt(1200), "y": ((randInt(-50))-1)*200})
+                        fuelDot[i].attr({"x": randInt(1200), "y": ((randInt(-5000))-500)})
                         fuelDot[i].xpos=fuelDot[i].attr('x'); // Set the value of xpos to be the current position of the dot
                         fuelDot[i].ypos=fuelDot[i].attr('y');
 
@@ -695,9 +694,9 @@ require(
             var fuelemit = function(i){
                 moveValue = randInt(4)
                 fuelDot[nexttoemit].xpos = randInt(1200);
-                fuelDot[nexttoemit].ypos = ((randInt(-50))-1)*80;
-                fuelDot[nexttoemit].xrate = randInt(3);
-                fuelDot[nexttoemit].yrate = randInt(3);
+                fuelDot[nexttoemit].ypos = ((randInt(-5000))-500);
+                fuelDot[nexttoemit].xrate = randInt(2);
+                fuelDot[nexttoemit].yrate = (randInt(5)+1);
                 nexttoemit++;
                 if(nexttoemit === 150){
                     nexttoemit = 0
@@ -710,7 +709,7 @@ require(
         var fuelPage = function(e){
             i=0
             while(i<150){
-                fuelDot[i].attr({"y": ((randInt(-50)-1)*200)});
+                fuelDot[i].attr({"y": ((randInt(-5000))-500)});
                 fuelDot[i].ypos=fuelDot[i].attr('y');
                 i=i+1
             }
@@ -748,7 +747,7 @@ require(
                 e.currentTarget.style.cursor = "crosshair"
             })
             drawInterval = setInterval(fuelDraw, 20)
-            repeatInterval = setInterval(fuelemit, 100)
+            repeatInterval = setInterval(fuelemit, 1500)
             } else {
                 alert("You already have max fuel!")
             }
