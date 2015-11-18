@@ -758,6 +758,7 @@ require(
                     fuelfull.show();
                     mouseDot.hide();
                     transpRect.hide();
+                    gamebacktomenuButton.hide();
                 };
                 //Show the continue screen if the user hits a unit that is larger than the user's unit
                 if(mouseDotDistance <= (fuelDot[i].attr("width")/2) && mouseDot.attr("width") < fuelDot[i].attr("width")){
@@ -767,6 +768,7 @@ require(
                     continueButton.show();
                     mouseDot.hide();
                     transpRect.hide();
+                    gamebacktomenuButton.hide();
                     //Reduce a life
                     lives = lives-1;
                     lifenumber.attr({text: lives});
